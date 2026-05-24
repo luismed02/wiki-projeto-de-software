@@ -11,7 +11,6 @@
 - [Diagrama de Classes de Projeto](#diagrama-de-classes-de-projeto)
 - [Implementação em Java](#implementação-em-java)
   - [Estrutura do código](#estrutura-do-código)
-  - [Como compilar e executar](#como-compilar-e-executar)
 
 ## Visão geral
 
