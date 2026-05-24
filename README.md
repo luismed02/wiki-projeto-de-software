@@ -587,7 +587,7 @@ classDiagram
 
 ## Implementação em Java
 
-A implementação está em [src/](src/) e segue o diagrama de Classes de Projeto: cada classe do diagrama corresponde a um arquivo Java, organizado em pacotes por estereótipo. A interface é por console (Scanner) e a persistência usa arquivos CSV (`;` como separador) na pasta [data/](data/).
+A implementação está em [src/](src/) e segue o diagrama de Classes de Projeto: cada classe do diagrama corresponde a um arquivo Java, organizado em pacotes por estereótipo. A interface é por console (Scanner) e a persistência usa arquivos CSV (`;` como separador) na pasta [src/data/](src/data/).
 
 ### Estrutura do código
 
@@ -619,26 +619,25 @@ src/
 │   ├── CestaSemanalRepository.java
 │   ├── EnderecoEntregaRepository.java
 │   └── PagamentoRepository.java
-└── domain/                                # entidades, value objects e enums
-    ├── Assinante.java
-    ├── CodigoVerificacao.java
-    ├── PlanoAssinatura.java
-    ├── Assinatura.java
-    ├── CestaSemanal.java
-    ├── ItemCesta.java
-    ├── Produto.java
-    ├── EnderecoEntrega.java
-    ├── CartaoCredito.java
-    ├── Pagamento.java
-    ├── TipoProduto.java
-    ├── StatusAssinatura.java
-    ├── StatusCesta.java
-    └── StatusPagamento.java
-
-data/
-├── planos.csv                             # seed: 3 planos pré-cadastrados
-├── produtos_semana.csv                    # seed: catálogo da semana (5 frutas, 5 legumes, 5 verduras)
-└── *.csv                                  # demais arquivos criados em runtime
+├── domain/                                # entidades, value objects e enums
+│   ├── Assinante.java
+│   ├── CodigoVerificacao.java
+│   ├── PlanoAssinatura.java
+│   ├── Assinatura.java
+│   ├── CestaSemanal.java
+│   ├── ItemCesta.java
+│   ├── Produto.java
+│   ├── EnderecoEntrega.java
+│   ├── CartaoCredito.java
+│   ├── Pagamento.java
+│   ├── TipoProduto.java
+│   ├── StatusAssinatura.java
+│   ├── StatusCesta.java
+│   └── StatusPagamento.java
+└── data/
+    ├── planos.csv                         # seed: 3 planos pré-cadastrados
+    ├── produtos_semana.csv                # seed: catálogo da semana (5 frutas, 5 legumes, 5 verduras)
+    └── *.csv                              # demais arquivos criados em runtime
 ```
 
 Responsabilidade por camada:
@@ -654,5 +653,4 @@ Responsabilidade por camada:
 
 O fluxo implementado em `TelaAssinaturaFeira.iniciar()` segue exatamente o [Diagrama de Sequência](#diagrama-de-sequência-de-projeto): celular → SMS → código → plano → loop FRUTA/LEGUME/VERDURA → endereço → pagamento → protocolo.
 
-
-Os dados ficam persistidos em arquivos CSV na pasta [data/](data/) e sobrevivem entre execuções. Para começar do zero, basta apagar todos os CSVs exceto `planos.csv` e `produtos_semana.csv` (que são os dados-semente).
+Os dados ficam persistidos em arquivos CSV na pasta [src/data/](src/data/) e sobrevivem entre execuções. Para começar do zero, basta apagar todos os CSVs exceto `planos.csv` e `produtos_semana.csv` (que são os dados-semente).
