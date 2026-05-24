@@ -11,6 +11,7 @@
 - [Diagrama de Classes de Projeto](#diagrama-de-classes-de-projeto)
 - [Implementação em Java](#implementação-em-java)
   - [Estrutura do código](#estrutura-do-código)
+  - [Vídeo de apresentação](#vídeo-de-apresentação)
 
 ## Visão geral
 
@@ -654,3 +655,7 @@ Responsabilidade por camada:
 O fluxo implementado em `TelaAssinaturaFeira.iniciar()` segue exatamente o [Diagrama de Sequência](#diagrama-de-sequência-de-projeto): celular → SMS → código → plano → loop FRUTA/LEGUME/VERDURA → endereço → pagamento → protocolo.
 
 Os dados ficam persistidos em arquivos CSV na pasta [src/data/](src/data/) e sobrevivem entre execuções. Para começar do zero, basta apagar todos os CSVs exceto `planos.csv` e `produtos_semana.csv` (que são os dados-semente).
+
+### Vídeo de apresentação
+
+[Vídeo do projeto](video.mp4)
