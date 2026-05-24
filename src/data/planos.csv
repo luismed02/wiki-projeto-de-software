@@ -1,4 +1,0 @@
-id;nome;preco;limiteFrutas;limiteLegumes;limiteVerduras;descricao;ativo
-1;Cesta Essencial;49.90;3;2;2;Ideal para 1 pessoa;true
-2;Cesta Familia;89.90;5;4;4;Para uma familia pequena;true
-3;Cesta Premium;129.90;7;5;5;Mais variedade semanal;true
