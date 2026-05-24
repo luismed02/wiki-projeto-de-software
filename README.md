@@ -658,5 +658,5 @@ Os dados ficam persistidos em arquivos CSV na pasta [src/data/](src/data/) e sob
 
 ## Vídeo de apresentação
 
-[▶ Assistir vídeo de apresentação](video.mp4)
+https://github.com/user-attachments/assets/7b65d83a-1d87-4723-a3fc-acb9f68d85a7
 
