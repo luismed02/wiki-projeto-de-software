@@ -1,0 +1,16 @@
+id;nome;tipo;quantidadeDisponivel
+1;Banana;FRUTA;50
+2;Maçã;FRUTA;40
+3;Laranja;FRUTA;60
+4;Mamão;FRUTA;20
+5;Manga;FRUTA;25
+6;Batata;LEGUME;80
+7;Cenoura;LEGUME;60
+8;Abobrinha;LEGUME;30
+9;Tomate;LEGUME;45
+10;Berinjela;LEGUME;25
+11;Alface;VERDURA;40
+12;Rúcula;VERDURA;30
+13;Espinafre;VERDURA;25
+14;Couve;VERDURA;35
+15;Agrião;VERDURA;20

@@ -1,0 +1,4 @@
+id;nome;descricao;precoSemanal;limiteFrutas;limiteLegumes;limiteVerduras
+1;Cesta Pequena;Ideal para 1-2 pessoas;49.90;4;3;3
+2;Cesta Média;Ideal para 3-4 pessoas;79.90;6;5;5
+3;Cesta Grande;Ideal para famílias;119.90;10;8;8
