@@ -656,6 +656,7 @@ O fluxo implementado em `TelaAssinaturaFeira.iniciar()` segue exatamente o [Diag
 
 Os dados ficam persistidos em arquivos CSV na pasta [src/data/](src/data/) e sobrevivem entre execuções. Para começar do zero, basta apagar todos os CSVs exceto `planos.csv` e `produtos_semana.csv` (que são os dados-semente).
 
-### Vídeo de apresentação
+## Vídeo de apresentação
 
-<video src="video.mp4" controls width="100%"></video>
+[▶ Assistir vídeo de apresentação](video.mp4)
+
