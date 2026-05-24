@@ -10,6 +10,8 @@
 - [Diagrama de Sequência de Projeto](#diagrama-de-sequência-de-projeto)
 - [Diagrama de Classes de Projeto](#diagrama-de-classes-de-projeto)
 - [Implementação em Java](#implementação-em-java)
+  - [Estrutura do código](#estrutura-do-código)
+  - [Como compilar e executar](#como-compilar-e-executar)
 
 ## Visão geral
 
@@ -202,21 +204,6 @@ classDiagram
     Pagamento "1" -- "1" CartaoCredito : usa
     Assinatura "1" -- "0..1" ProtocoloAssinatura : formalizada por
 ```
-
-## Projeto do Caso de Uso: Assinar Serviço de Feira
-
-Os diagramas a seguir detalham o projeto do fluxo principal do caso de uso **Assinar Serviço de Feira**, mantendo correspondência com o fluxo visual e com as telas do protótipo. O projeto considera a separação entre interface, controle do caso de uso, serviços de aplicação, entidades de domínio, repositórios e integrações externas.
-
-### Correspondência com o caso de uso e protótipo
-
-| Etapa do fluxo principal | Responsabilidade de projeto                                                  | Referência no protótipo |
-| ------------------------ | ---------------------------------------------------------------------------- | ----------------------- |
-| 1 a 4                    | Identificar o assinante por celular, enviar SMS e validar o código informado | Telas 1 a 3             |
-| 5 a 6                    | Exibir planos disponíveis e registrar o plano escolhido                      | Tela 4                  |
-| 7 a 15                   | Buscar produtos por categoria e montar a cesta semanal                       | Telas 5 a 7             |
-| 16 a 18                  | Exibir resumo da cesta, receber endereço e confirmar compra semanal          | Tela 8                  |
-| 19 a 22                  | Colocar compra em aguardando aprovação, solicitar pagamento e validar cartão | Tela 9                  |
-| 23 a 25                  | Aprovar assinatura/cesta, gerar protocolo e exibir confirmação               | Tela 10                 |
 
 ## Diagrama de Sequência de Projeto
 
@@ -601,69 +588,72 @@ classDiagram
 
 ## Implementação em Java
 
-O código-fonte do cenário principal **Assinar Serviço de Feira** foi implementado dentro da pasta `src`, usando Java puro e execução pelo console. A implementação segue a separação proposta nos diagramas de projeto: objeto de fronteira, controller, serviços, entidades de domínio, repositórios e gateways externos simulados.
+A implementação está em [src/](src/) e segue o diagrama de Classes de Projeto: cada classe do diagrama corresponde a um arquivo Java, organizado em pacotes por estereótipo. A interface é por console (Scanner) e a persistência usa arquivos CSV (`;` como separador) na pasta [data/](data/).
 
-### Organização do código
+### Estrutura do código
 
-- `src/br/com/feiraassinatura/Main.java`: ponto inicial da aplicação. Ele cria os repositórios, serviços, gateways, controller e inicia a tela de console.
-- `boundary/TelaAssinaturaFeira.java`: representa o objeto de fronteira. É responsável por conversar com o assinante pelo terminal, capturar celular, código SMS, plano, produtos, endereço e cartão.
-- `controller/AssinaturaController.java`: coordena o caso de uso. Ele liga a tela aos serviços e garante a sequência do fluxo principal.
-- `domain`: contém as entidades e enums do domínio, como `Assinante`, `PlanoAssinatura`, `CestaSemanal`, `Assinatura`, `Produto`, `EnderecoEntrega`, `Pagamento`, `TipoProduto`, `StatusAssinatura`, `StatusCesta` e `StatusPagamento`.
-- `service`: contém as regras de aplicação, como autenticação por SMS, listagem de planos, catálogo da semana, montagem da cesta, validação de endereço, pagamento e geração de protocolo.
-- `repository`: contém a persistência simples em arquivos CSV/TXT. Os dados são armazenados em `src/data`.
-- `gateway`: simula integrações externas, como envio de SMS e autorização da operadora de cartão de crédito.
-- `dto`: contém objetos simples usados para retornar dados entre camadas, como a confirmação final da assinatura.
+```
+src/
+├── Main.java                              # entry point: instancia tudo e dispara a Tela
+├── boundary/
+│   └── TelaAssinaturaFeira.java           # UI por console; conduz o fluxo
+├── controller/
+│   └── AssinaturaController.java          # orquestra os services conforme o diagrama de sequência
+├── service/
+│   ├── AutenticacaoSmsService.java
+│   ├── PlanoAssinaturaService.java
+│   ├── CatalogoSemanaService.java
+│   ├── CestaSemanalService.java
+│   ├── EnderecoEntregaService.java
+│   ├── PagamentoService.java
+│   └── ProtocoloService.java
+├── gateway/                               # adaptadores para sistemas externos (mocks)
+│   ├── SmsGateway.java                    # imprime o SMS no console
+│   └── OperadoraCartaoCreditoGateway.java # sempre aprova; gera código de transação
+├── repository/                            # persistência em CSV
+│   ├── CsvUtil.java                       # util compartilhado para ler/escrever CSV
+│   ├── AssinanteRepository.java
+│   ├── CodigoVerificacaoRepository.java
+│   ├── PlanoAssinaturaRepository.java
+│   ├── CatalogoProdutoRepository.java
+│   ├── AssinaturaRepository.java
+│   ├── CestaSemanalRepository.java
+│   ├── EnderecoEntregaRepository.java
+│   └── PagamentoRepository.java
+└── domain/                                # entidades, value objects e enums
+    ├── Assinante.java
+    ├── CodigoVerificacao.java
+    ├── PlanoAssinatura.java
+    ├── Assinatura.java
+    ├── CestaSemanal.java
+    ├── ItemCesta.java
+    ├── Produto.java
+    ├── EnderecoEntrega.java
+    ├── CartaoCredito.java
+    ├── Pagamento.java
+    ├── TipoProduto.java
+    ├── StatusAssinatura.java
+    ├── StatusCesta.java
+    └── StatusPagamento.java
 
-### Fluxo implementado
-
-A aplicação executa o fluxo principal descrito no caso de uso:
-
-1. O assinante informa o celular.
-2. O sistema envia um código SMS simulado.
-3. O assinante confirma o código.
-4. O sistema exibe os planos disponíveis.
-5. O assinante escolhe um plano.
-6. O sistema exibe produtos por categoria: frutas, legumes e verduras.
-7. O assinante escolhe os itens da cesta semanal.
-8. O sistema exibe o resumo da cesta e solicita endereço.
-9. O sistema salva endereço, cesta e assinatura com status `AGUARDANDO_APROVACAO`.
-10. O assinante informa os dados do cartão.
-11. O pagamento é aprovado pela operadora simulada.
-12. A assinatura e a cesta mudam para `APROVADA`.
-13. O sistema gera e exibe o número de protocolo.
-
-### Persistência dos dados
-
-Foi usada persistência em arquivos CSV por ser a alternativa mais simples para a atividade. Na primeira execução, o sistema cria automaticamente arquivos em `src/data`, incluindo:
-
-- `planos.csv`: planos de assinatura disponíveis.
-- `produtos.csv`: catálogo semanal de frutas, legumes e verduras.
-- `assinantes.csv`: assinantes identificados pelo celular.
-- `codigos_verificacao.csv`: códigos SMS gerados.
-- `cestas.csv` e `itens_cesta.csv`: cesta semanal e seus produtos.
-- `enderecos.csv`: endereço de entrega.
-- `assinaturas.csv`: assinatura realizada e seu status.
-- `pagamentos.csv`: dados do pagamento aprovado.
-- `protocolos.csv`: protocolo gerado para a assinatura.
-
-### Como compilar e executar
-
-Compilar:
-
-```bash
-javac -d out $(find src -name "*.java")
+data/
+├── planos.csv                             # seed: 3 planos pré-cadastrados
+├── produtos_semana.csv                    # seed: catálogo da semana (5 frutas, 5 legumes, 5 verduras)
+└── *.csv                                  # demais arquivos criados em runtime
 ```
 
-Executar:
+Responsabilidade por camada:
 
-```bash
-java -cp out br.com.feiraassinatura.Main
-```
+| Camada | Estereótipo | Responsabilidade |
+|---|---|---|
+| `boundary` | `<<boundary>>` | Interage com o ator (Assinante) — lê entradas e imprime saídas |
+| `controller` | `<<control>>` | Orquestra o caso de uso, mantendo estado da assinatura em andamento |
+| `service` | `<<service>>` | Regras do negócio por contexto (autenticação, plano, cesta, pagamento, ...) |
+| `gateway` | `<<external>>` | Adaptadores para sistemas externos (SMS, operadora de cartão) |
+| `repository` | `<<repository>>` | Lê/escreve CSVs, um arquivo por agregado |
+| `domain` | `<<entity>>` / `<<value object>>` / `<<enumeration>>` | Estruturas de dados do domínio |
 
-O código SMS simulado usado para teste é:
+O fluxo implementado em `TelaAssinaturaFeira.iniciar()` segue exatamente o [Diagrama de Sequência](#diagrama-de-sequência-de-projeto): celular → SMS → código → plano → loop FRUTA/LEGUME/VERDURA → endereço → pagamento → protocolo.
 
-```text
-123456
-```
 
-Ao final da execução, o console mostra a mensagem de sucesso, os dados da entrega, o status aprovado da assinatura/cesta e o número de protocolo gerado.
+Os dados ficam persistidos em arquivos CSV na pasta [data/](data/) e sobrevivem entre execuções. Para começar do zero, basta apagar todos os CSVs exceto `planos.csv` e `produtos_semana.csv` (que são os dados-semente).
