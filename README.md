@@ -658,4 +658,4 @@ Os dados ficam persistidos em arquivos CSV na pasta [src/data/](src/data/) e sob
 
 ### Vídeo de apresentação
 
-[Vídeo do projeto](video.mp4)
+<video src="video.mp4" controls width="100%"></video>
